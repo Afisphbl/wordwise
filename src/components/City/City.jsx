@@ -3,6 +3,7 @@ import styles from "./City.module.css";
 import { useEffect } from "react";
 import { useCities } from "../../context/CitiesContext";
 import Spinner from "../Spinner/Spinner";
+import ButtonBack from "../ButtonBack/ButtonBack";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -55,6 +56,10 @@ function City() {
         >
           Check out {cityName} on Wikipedia &rarr;
         </a>
+      </div>
+
+      <div>
+        <ButtonBack />
       </div>
     </div>
   );
