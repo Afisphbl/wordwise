@@ -1,25 +1,86 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 
 const CitiesContext = createContext();
 
 const API_URL = "http://localhost:9000/";
 
+const initialCity = {
+  cities: [],
+  loading: false,
+  currentCity: {},
+  error: null,
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "LOADING_START":
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case "GET_CITY":
+      return {
+        ...state,
+        cities: action.payload,
+        loading: false,
+      };
+
+    case "GET_CURRENT_CITY":
+      return {
+        ...state,
+        currentCity: action.payload,
+        loading: false,
+      };
+
+    case "CREATE_CITY":
+      return {
+        ...state,
+        cities: [...state.cities, action.payload],
+        loading: false,
+        currentCity: action.payload,
+      };
+
+    case "DELETE_CITY":
+      return {
+        ...state,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+        loading: false,
+        currentCity: {},
+      };
+
+    case "REJECTED":
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    default:
+      throw new Error(`Unknown action type: ${action.type}`);
+  }
+};
+
 export const CitiesProvider = ({ children }) => {
-  const [cities, setCities] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentCity, setCurrentCity] = useState({});
+  const [{ cities, loading, currentCity, error }, dispatch] = useReducer(
+    reducer,
+    initialCity,
+  );
 
   useEffect(() => {
     async function fetchCities() {
-      setLoading(true);
+      dispatch({ type: "LOADING_START" });
       try {
         const response = await fetch(`${API_URL}cities`);
         const data = await response.json();
-        setCities(data);
-      } catch (error) {
-        console.error("Error fetching cities:", error);
-      } finally {
-        setLoading(false);
+        dispatch({ type: "GET_CITY", payload: data });
+      } catch {
+        dispatch({ type: "REJECTED", payload: "Error fetching cities" });
       }
     }
 
@@ -27,20 +88,19 @@ export const CitiesProvider = ({ children }) => {
   }, []);
 
   async function getCity(id) {
-    setLoading(true);
+    if (currentCity.id === +id) return;
+    dispatch({ type: "LOADING_START" });
     try {
       const response = await fetch(`${API_URL}cities/${id}`);
       const data = await response.json();
-      setCurrentCity(data);
-    } catch (error) {
-      console.error("Error fetching city:", error);
-    } finally {
-      setLoading(false);
+      dispatch({ type: "GET_CURRENT_CITY", payload: data });
+    } catch {
+      dispatch({ type: "REJECTED", payload: "Error gettings city" });
     }
   }
 
   async function createCity(newCity) {
-    setLoading(true);
+    dispatch({ type: "LOADING_START" });
     try {
       const response = await fetch(`${API_URL}cities`, {
         method: "POST",
@@ -51,25 +111,21 @@ export const CitiesProvider = ({ children }) => {
       });
       const data = await response.json();
 
-      setCities((prevCities) => [...prevCities, data]);
-    } catch (error) {
-      console.error("Error creating city:", error);
-    } finally {
-      setLoading(false);
+      dispatch({ type: "CREATE_CITY", payload: data });
+    } catch {
+      dispatch({ type: "REJECTED", payload: "Error creating city" });
     }
   }
 
   async function deleteCity(id) {
-    setLoading(true);
+    dispatch({ type: "LOADING_START" });
     try {
       await fetch(`${API_URL}cities/${id}`, {
         method: "DELETE",
       });
-      setCities((prevCities) => prevCities.filter((city) => city.id !== id));
-    } catch (error) {
-      console.error("Error deleting city:", error);
-    } finally {
-      setLoading(false);
+      dispatch({ type: "DELETE_CITY", payload: id });
+    } catch {
+      dispatch({ type: "REJECTED", payload: "Error deleting city" });
     }
   }
 
@@ -77,6 +133,7 @@ export const CitiesProvider = ({ children }) => {
     cities,
     loading,
     currentCity,
+    error,
     getCity,
     createCity,
     deleteCity,

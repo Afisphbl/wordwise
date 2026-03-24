@@ -37,18 +37,6 @@
       "id": 98443197
     },
     {
-      "cityName": "London",
-      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
-      "emoji": "🇬🇧",
-      "date": "2026-03-24T15:10:45.108Z",
-      "notes": "AS",
-      "position": {
-        "lat": "51.52416206640336",
-        "lng": "-0.0919888106090694"
-      },
-      "id": 98443200
-    },
-    {
       "cityName": "Hemingford Grey",
       "country": "United Kingdom of Great Britain and Northern Ireland (the)",
       "emoji": "🇬🇧",
@@ -59,6 +47,18 @@
         "lng": "-0.09244549531949753"
       },
       "id": 98443201
+    },
+    {
+      "cityName": "London",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "emoji": "🇬🇧",
+      "date": "2026-03-24T16:29:53.251Z",
+      "notes": "Test",
+      "position": {
+        "lat": "51.52512248501952",
+        "lng": "-0.08940625571311368"
+      },
+      "id": 98443202
     }
   ]
 }
