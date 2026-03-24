@@ -37,30 +37,6 @@
       "id": 98443197
     },
     {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2026-03-24T15:07:27.441Z",
-      "notes": "ABS",
-      "position": {
-        "lat": "52.54633902505523",
-        "lng": "13.379666980502709"
-      },
-      "id": 98443198
-    },
-    {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2026-03-24T15:09:07.007Z",
-      "notes": "",
-      "position": {
-        "lat": "52.54633902505523",
-        "lng": "13.379666980502709"
-      },
-      "id": 98443199
-    },
-    {
       "cityName": "London",
       "country": "United Kingdom of Great Britain and Northern Ireland (the)",
       "emoji": "🇬🇧",
@@ -83,18 +59,6 @@
         "lng": "-0.09244549531949753"
       },
       "id": 98443201
-    },
-    {
-      "cityName": "Vieure",
-      "country": "France",
-      "emoji": "🇫🇷",
-      "date": "2026-03-24T15:12:18.038Z",
-      "notes": "",
-      "position": {
-        "lat": "46.511039661365324",
-        "lng": "2.853991012864077"
-      },
-      "id": 98443202
     }
   ]
 }

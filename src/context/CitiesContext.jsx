@@ -59,7 +59,28 @@ export const CitiesProvider = ({ children }) => {
     }
   }
 
-  const value = { cities, loading, currentCity, getCity, createCity };
+  async function deleteCity(id) {
+    setLoading(true);
+    try {
+      await fetch(`${API_URL}cities/${id}`, {
+        method: "DELETE",
+      });
+      setCities((prevCities) => prevCities.filter((city) => city.id !== id));
+    } catch (error) {
+      console.error("Error deleting city:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const value = {
+    cities,
+    loading,
+    currentCity,
+    getCity,
+    createCity,
+    deleteCity,
+  };
 
   return (
     <CitiesContext.Provider value={value}>{children}</CitiesContext.Provider>
