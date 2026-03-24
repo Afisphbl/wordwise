@@ -1,18 +1,18 @@
 import Spinner from "./Spinner";
-import CityItem from "./CityItem";
+import styles from "./CityList.module.css";
+import CityItem from "./CityItem/CityItem";
 import Message from "./Message";
-import styles from "./CountryList.module.css";
 
-function CountriesList({ cities, loading }) {
+function CityList({ cities, loading }) {
   if (loading) return <Spinner />;
 
-  if (cities.length)
+  if (!cities.length)
     return (
       <Message message="Add your first city by clicking on a city on the map" />
     );
 
   return (
-    <ul className={styles.countriesList}>
+    <ul className={styles.cityList}>
       {cities.map((city) => (
         <CityItem key={city.id} city={city} />
       ))}
@@ -20,4 +20,4 @@ function CountriesList({ cities, loading }) {
   );
 }
 
-export default CountriesList;
+export default CityList;
